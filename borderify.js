@@ -63,11 +63,11 @@ function makeItRain(canvas) {
     animate();
 }
 
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("GOOEYRAIN")) {
-        isRain = !isRain;
-    }
-});
+browser.runtime.onMessage.addListener(changeSetting);
+
+function changeSetting () {
+    isRain = !isRain;
+}
 
 var canvas = addCanvas();
 window.setTimeout(function() {
