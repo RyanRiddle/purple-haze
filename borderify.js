@@ -17,6 +17,7 @@ function addCanvas() {
 }
 
 var isRain = true;
+var threeSeconds = false;
 
 function makeItRain(canvas) {
     var canvasContext = canvas.getContext("2d");
@@ -36,10 +37,11 @@ function makeItRain(canvas) {
         if (isRain) {
             canvasContext.clearRect(0, 0, W, H);
         }
-
+        
         for (var i = 0; i < hearts.length; i++) {
             var delta = i % 2 ? 2 : 1;
-            hearts[i].y += delta;
+            if (hearts[i].y < H - 20)
+                hearts[i].y += delta;
             var x = hearts[i].x;
             var y = hearts[i].y;
             canvasContext.fillText(HEART, x, y);
@@ -54,7 +56,8 @@ function makeItRain(canvas) {
 
 
     function animate() {
-        addHeart();
+        if (!threeSeconds)
+            addHeart();
         hearts = removeHearts(hearts);
         moveHearts(hearts);
         window.requestAnimationFrame(animate);
@@ -72,4 +75,7 @@ function changeSetting () {
 var canvas = addCanvas();
 window.setTimeout(function() {
     makeItRain(canvas);
+    window.setTimeout(function() {
+        threeSeconds = true;
+    }, 3000);
 }, 1000);
